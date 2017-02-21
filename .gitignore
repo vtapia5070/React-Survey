@@ -1,2 +1,13 @@
-/node_modules
-/Public
+# dependencies
+node_modules
+
+# Build files
+Public
+
+# Private variables
+src/js/private.js
+
+# API Dummy Data
+api
+
+.DS_Store
