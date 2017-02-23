@@ -5,21 +5,36 @@ import apiKey from './private.js';
 class HelloWorld extends React.Component {
 
     static getSurvey () {
-        const request = new XMLHttpRequest();
-        // const query = ;
-        const url = `http://api.insightexpress.com/Questions/Options/Get?X-ApiKey=${apiKey}`;
-        request.open('GET', url);
-        // request.setRequestHeader('Access-Control-Allow-Origin', '*');
-        // request.setRequestHeader('Api-Key', apiKey);
-        request.onerror = (res) => {
-            console.log(res);
-        }; // error handler here
-        request.onload = (res) => {
-            console.log(res);
+        function jsonpCallback(json){
+            debugger;
+            console.log('json response:', JSON.stringify(json));
         }
-        request.send(null);
-        // request.send();
-        return request.responseText;
+
+        $.ajax({
+            url: `http://api.insightexpress.com/surveys/281980?X-ApiKey=${apiKey}`, //&callback=jsonpCallback
+            type: 'GET',
+            jsonpCallback: 'jsonCallback',
+            // contentType: 'text/javascript',
+            contentType: 'application/json',
+            dataType: "jsonp",
+            success: (result) => {
+                console.log(JSON.stringify(result));
+            },
+            error: (err) => {
+                console.log(JSON.stringify(err));
+            }
+        });
+
+        // function foo(response) {
+        //     console.log('response:', response);
+        //     // document.getElementById("output").innerHTML = response.bar;
+        // };
+
+        // var tag = document.createElement("script");
+        // tag.type='application/json';
+        // tag.src = `http://api.insightexpress.com/surveys/281980?X-ApiKey=${apiKey}`;
+
+        // document.getElementsByTagName("head")[0].appendChild(tag);
     }
 
     render () {
