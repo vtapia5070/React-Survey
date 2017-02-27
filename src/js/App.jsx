@@ -1,28 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import apiKey from './private.js';
+import { apiKey, SampleSurvey } from './private.js';
 
 class HelloWorld extends React.Component {
 
     static getSurvey () {
         function jsonpCallback(json){
-            debugger;
             console.log('json response:', JSON.stringify(json));
         }
 
         $.ajax({
-            url: `http://api.insightexpress.com/surveys/281980?X-ApiKey=${apiKey}`, //&callback=jsonpCallback
+            url: `http://api.insightexpress.com/Questions/Types?X-ApiKey=${apiKey}`, // &callback=jsonpCallback
             type: 'GET',
-            jsonpCallback: 'jsonCallback',
-            // contentType: 'text/javascript',
-            contentType: 'application/json',
-            dataType: "jsonp",
-            success: (result) => {
-                console.log(JSON.stringify(result));
-            },
-            error: (err) => {
-                console.log(JSON.stringify(err));
-            }
+            jsonpCallback: 'jsonpCallback',
+            contentType: 'text/javascript',
+            // contentType: 'application/json',
+            dataType: "jsonp"
+            // success: (result) => {
+            //     console.log(result);
+            // },
+            // error: (err) => {
+            //     console.log(err);
+            // }
         });
 
         // function foo(response) {
@@ -38,7 +37,8 @@ class HelloWorld extends React.Component {
     }
 
     render () {
-        this.constructor.getSurvey();
+        // this.constructor.getSurvey();
+        console.log('sampleSurvey:', SampleSurvey);
         return (
             <div className="survey-container">
                 <h1>Hello World</h1>
