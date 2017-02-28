@@ -13,7 +13,7 @@ class HelloWorld extends React.Component {
         const survey = this.constructor.loadSurvey();
         console.log(survey);
         let surveyQuestions = survey.questions.map((question) => {
-            return (<div key={question.position}>'{question.label}'</div>);
+            return (<div key={question.position}>{question.label}</div>);
         })
 
         return surveyQuestions;
