@@ -1,48 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { apiKey, SampleSurvey } from './private.js';
+import { getSurvey } from './utilities';
 
 class HelloWorld extends React.Component {
 
-    static getSurvey () {
-        function jsonpCallback(json){
-            console.log('json response:', JSON.stringify(json));
-        }
+    static loadSurvey () {
+        return SampleSurvey;
+    }
 
-        $.ajax({
-            url: `http://api.insightexpress.com/Questions/Types?X-ApiKey=${apiKey}`, // &callback=jsonpCallback
-            type: 'GET',
-            jsonpCallback: 'jsonpCallback',
-            contentType: 'text/javascript',
-            // contentType: 'application/json',
-            dataType: "jsonp"
-            // success: (result) => {
-            //     console.log(result);
-            // },
-            // error: (err) => {
-            //     console.log(err);
-            // }
-        });
+    renderQuestions () {
+        const survey = this.constructor.loadSurvey();
+        console.log(survey);
+        let surveyQuestions = survey.questions.map((question) => {
+            return (<div key={question.position}>'{question.label}'</div>);
+        })
 
-        // function foo(response) {
-        //     console.log('response:', response);
-        //     // document.getElementById("output").innerHTML = response.bar;
-        // };
-
-        // var tag = document.createElement("script");
-        // tag.type='application/json';
-        // tag.src = `http://api.insightexpress.com/surveys/281980?X-ApiKey=${apiKey}`;
-
-        // document.getElementsByTagName("head")[0].appendChild(tag);
+        return surveyQuestions;
     }
 
     render () {
-        // this.constructor.getSurvey();
-        console.log('sampleSurvey:', SampleSurvey);
+        this.constructor.loadSurvey();
+
         return (
             <div className="survey-container">
                 <h1>Hello World</h1>
                 <div> This will be the entry file for the survey </div>
+                {this.renderQuestions()}
             </div>
         );
     }
