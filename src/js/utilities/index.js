@@ -26,3 +26,7 @@ export const getSurvey = () => {
         // }
     });
 };
+
+export const questionTypes = {
+    3: 'RadioButton'
+};
