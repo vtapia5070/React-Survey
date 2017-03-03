@@ -2,6 +2,10 @@
  * Input - Radio Buttons
  */
 
+// TODO:
+// Handle required responses.
+// Consider options. (how many can be selected?)
+// What do we do with image tags in respose text?
 import React, { Component, PropTypes } from 'react';
 
 class RadioButton extends Component {

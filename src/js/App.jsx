@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { apiKey, SampleSurvey } from './private.js';
+import { apiKey, SampleSurvey } from './utilities/private.js';
 import { getSurvey, questionTypes } from './utilities';
 import RadioButton from './components/inputs/RadioButton.jsx';
 
-class HelloWorld extends React.Component {
+class Survey extends React.Component {
+    constructor () {
+        const survey = SampleSurvey;
 
-    static loadSurvey () {
-        return SampleSurvey;
+        // TODO: We will need a way to determine which question we will start with.
+        this.setState({
+            answers: {}, // Where we will store respondent answers.
+            position: 101, // Current question.
+            questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
+        });
     }
+
 
     renderQuestions () {
         const survey = this.constructor.loadSurvey();
@@ -27,7 +34,13 @@ class HelloWorld extends React.Component {
             );
         });
 
+        const question
+
         return surveyQuestions;
+    }
+
+    renderQuestion () {
+        // this.state.questions
     }
 
     render () {
@@ -35,15 +48,13 @@ class HelloWorld extends React.Component {
 
         return (
             <div className="survey-container">
-                <h1>Hello World</h1>
-                <div> This will be the entry file for the survey </div>
-                {this.renderQuestions()}
+                {this.renderQuestion}
             </div>
         );
     }
 };
 
 ReactDOM.render(
-    <HelloWorld />,
+    <Survey />,
     document.querySelector('#app')
 );
