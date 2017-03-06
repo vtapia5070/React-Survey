@@ -40,7 +40,7 @@ class RadioButton extends Component {
         const questionHtml = { __html: this.props.question }
         return (
             <div>
-                <p>{this.props.position}</p>
+                <p>Question {this.props.position}</p>
                 <label dangerouslySetInnerHTML={questionHtml} />
                 <div className="responses">
                     {this.renderResponses()}
