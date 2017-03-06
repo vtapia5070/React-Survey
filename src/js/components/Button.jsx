@@ -1,3 +1,6 @@
+/*
+ * Buttons!
+ */
 import React, { Component, PropTypes } from 'react';
 
 class Button extends Component {
@@ -8,8 +11,9 @@ class Button extends Component {
     render () {
        return (
             <button
-                value={this.props.value}
+                disabled={this.props.disabled}
                 onClick={this.props.onClick}
+                value={this.props.value}
             >{this.props.value}</button>
         );
     }

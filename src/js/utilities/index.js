@@ -23,5 +23,9 @@ export const getSurvey = () => {
 };
 
 export const QuestionTypes = {
-    3: 'RadioButton'
+    3: 'RadioButton',
+    19: 'CheckboxString',
+    22: 'TextboxGrid',
+    13: 'LabelCustomHTML',
+    7: 'TenPointScale'
 };

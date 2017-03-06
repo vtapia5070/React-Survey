@@ -40,8 +40,8 @@ class RadioButton extends Component {
         const questionHtml = { __html: this.props.question }
         return (
             <div>
-                <p>Question {this.props.position}</p>
-                <div dangerouslySetInnerHTML={questionHtml}></div>
+                <p>{this.props.position}</p>
+                <label dangerouslySetInnerHTML={questionHtml} />
                 <div className="responses">
                     {this.renderResponses()}
                 </div>
@@ -52,6 +52,7 @@ class RadioButton extends Component {
 
 RadioButton.propTypes = {
     question: PropTypes.string,
+    // question: PropTypes.object,
     position: PropTypes.number,
     responses: PropTypes.arrayOf(
         PropTypes.shape({

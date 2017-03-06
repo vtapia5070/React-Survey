@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { apiKey, SampleSurvey } from './utilities/private.js';
 import { getSurvey, QuestionTypes } from './utilities';
-import RadioButton from './components/inputs/RadioButton.jsx';
+import RadioButton from './components/RadioButton.jsx';
 import Button from './components/Button.jsx';
+import CheckboxString from './components/CheckboxString.jsx';
+import TextboxGrid from './components/TextboxGrid.jsx';
 
 class Survey extends React.Component {
     constructor (props) {
@@ -37,14 +39,49 @@ class Survey extends React.Component {
         const { position, label, type, responses } = this.state.questions[this.state.questionPosition];
         console.log(position, label, responses);
         // TODO: apply this to all question types, use switch statement?
-        return (
-            QuestionTypes[type] &&
-            <RadioButton
-                question={label}
-                position={position}
-                responses={responses}
-            />
-        );
+
+        switch (QuestionTypes[type]) {
+            case 'RadioButton':
+                return (
+                    <RadioButton
+                        question={label}
+                        position={position}
+                        responses={responses}
+                    />
+                )
+                break;
+            case 'CheckboxString':
+                return (
+                    <CheckboxString
+                        question={label}
+                        position={position}
+                        responses={responses}
+                    />
+                )
+                break;
+            case 'TextboxGrid':
+                return (
+                    <TextboxGrid
+                        question={label}
+                        position={position}
+                        responses={responses}
+                    />
+                );
+                break;
+            case 'LabelCustomHTML':
+                return <div>This is an empty question with a skip script. Are all of these question types (13) the same?</div>;
+                break;
+            case 'TenPointScale':
+                return (
+                    <div>TEST</div>
+                );
+                break;
+            default :
+                return (
+                    <div>The component for this question type has not been created yet.</div>
+                );
+
+        }
 
     }
 
@@ -52,8 +89,8 @@ class Survey extends React.Component {
         return (
             <div className="survey-container">
                 { this.renderQuestion() }
-                <Button disabled={false} onClick={this.handleButtonClick} value="Previous" />
-                <Button disabled={false} onClick={this.handleButtonClick} value="Next" />
+                <Button disabled={ this.state.questionPosition === 0 } onClick={this.handleButtonClick} value="Previous" />
+                <Button disabled={ this.state.questionPosition === this.state.questions.length } onClick={this.handleButtonClick} value="Next" />
             </div>
         );
     }

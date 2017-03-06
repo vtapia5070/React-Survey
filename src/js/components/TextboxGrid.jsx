@@ -1,34 +1,19 @@
-/*
- * Input - Radio Buttons
- */
-
-// TODO:
-// Handle required responses.
-// Consider options. (how many can be selected?)
-// What do we do with image tags in respose text?
-
 import React, { Component, PropTypes } from 'react';
 
-class RadioButton extends Component {
+class TextboxGrid extends Component {
     constructor (props) {
         super(props);
-
-        // this.onInputChange = this.onInputChange.bind(this);
-
-        // TODO: How will we set state for each response?
-        // How will we manage the change of each response input?
-        // Need more insight on how responses will be referenced. (POST, skip scripts, etc.)
     }
 
     renderResponses () {
+        // TODO: Check which inputs are required/optional.
         const responses = this.props.responses.map((response) => {
+            const responseHtml = { __html: response.text }
             return (
                 <div key={response.index}>
                     <input
-                        id={response.index}
-                        type="radio"
+                        type="text"
                     />
-                    <label>{response.text}</label>
                 </div>
             );
         });
@@ -42,15 +27,13 @@ class RadioButton extends Component {
             <div>
                 <p>Question {this.props.position}</p>
                 <div dangerouslySetInnerHTML={questionHtml}></div>
-                <div className="responses">
-                    {this.renderResponses()}
-                </div>
+                {this.renderResponses()}
             </div>
         );
     }
 }
 
-RadioButton.propTypes = {
+TextboxGrid.propTypes = {
     question: PropTypes.string,
     position: PropTypes.number,
     responses: PropTypes.arrayOf(
@@ -59,6 +42,6 @@ RadioButton.propTypes = {
             text: PropTypes.string,
         }),
     ),
-}
+};
 
-export default RadioButton;
+export default TextboxGrid;
