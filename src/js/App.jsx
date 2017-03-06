@@ -1,54 +1,57 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { apiKey, SampleSurvey } from './utilities/private.js';
-import { getSurvey, questionTypes } from './utilities';
+import { getSurvey, QuestionTypes } from './utilities';
 import RadioButton from './components/inputs/RadioButton.jsx';
 
 class Survey extends React.Component {
-    constructor () {
-        const survey = SampleSurvey;
 
+    componentWillMount () {
+        const survey = SampleSurvey; // TODO: make sure
         // TODO: We will need a way to determine which question we will start with.
         this.setState({
             answers: {}, // Where we will store respondent answers.
-            position: 101, // Current question.
+            questionPosition: 0, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
         });
     }
 
+    loadPreviousButton () {
+        // TODO: When user presses the previous button.
+    }
 
-    renderQuestions () {
-        const survey = this.constructor.loadSurvey();
-
-        let surveyQuestions = survey.questions.map((question) => {
-            const questionType = questionTypes[question.type];
-            const questionHtml = { __html: question.label };
-            return (
-                questionType &&
-                <RadioButton
-                    key={question.position}
-                    questionHtml={questionHtml}
-                    position={question.position}
-                    responses={question.responses}
-                />
-            );
-        });
-
-        const question
-
-        return surveyQuestions;
+    loadNextQuestion () { // When user presses the next button.
+        if (!Object.keys(this.state.answers)) {
+            // survey has not started, render the first index of questions array.
+            // invoke this.renderQuestion()
+            // return
+        }
+        // otherwise update state with next question
+        const nextPosition = this.state.position++;
+        this.setState({questionPosition: nextPosition});
     }
 
     renderQuestion () {
-        // this.state.questions
+        const { position, label, type, responses } = this.state.questions[this.state.questionPosition];
+        console.log(position, label, responses);
+        // TODO: apply this to all
+        return (
+            QuestionTypes[type] &&
+            <RadioButton
+                question={label}
+                position={position}
+                responses={responses}
+            />
+        );
+        // console.log(question);
+
     }
 
     render () {
-        this.constructor.loadSurvey();
 
         return (
             <div className="survey-container">
-                {this.renderQuestion}
+                { this.renderQuestion() }
             </div>
         );
     }

@@ -1,3 +1,4 @@
+// TODO : when getting data, filter out query steing questions
 export const getSurvey = () => {
 
     const jsonpCallback =  (json) => {
@@ -18,8 +19,9 @@ export const getSurvey = () => {
         //     console.log(err);
         // }
     });
+
 };
 
-export const questionTypes = {
+export const QuestionTypes = {
     3: 'RadioButton'
 };

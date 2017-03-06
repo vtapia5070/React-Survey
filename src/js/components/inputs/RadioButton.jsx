@@ -6,11 +6,13 @@
 // Handle required responses.
 // Consider options. (how many can be selected?)
 // What do we do with image tags in respose text?
+
 import React, { Component, PropTypes } from 'react';
 
 class RadioButton extends Component {
     constructor (props) {
         super(props);
+        console.log(props);
 
         // this.onInputChange = this.onInputChange.bind(this);
 
@@ -37,10 +39,11 @@ class RadioButton extends Component {
     }
 
     render () {
+        const questionHtml = { __html: this.props.question }
         return (
             <div>
                 <p>{this.props.position}</p>
-                <label dangerouslySetInnerHTML={this.props.questionHtml} />
+                <label dangerouslySetInnerHTML={questionHtml} />
                 <div className="responses">
                     {this.renderResponses()}
                 </div>
@@ -50,9 +53,15 @@ class RadioButton extends Component {
 }
 
 RadioButton.propTypes = {
-    questionHtml: PropTypes.object,
+    question: PropTypes.string,
+    // question: PropTypes.object,
     position: PropTypes.number,
-    responses: PropTypes.array,
+    responses: PropTypes.arrayOf(
+        PropTypes.shape({
+            index: PropTypes.number,
+            text: PropTypes.string,
+        }),
+    ),
 }
 
 export default RadioButton;
