@@ -5,30 +5,33 @@ import { getSurvey, QuestionTypes } from './utilities';
 import RadioButton from './components/inputs/RadioButton.jsx';
 
 class Survey extends React.Component {
+    constructor (props) {
+        super(props); // is this neccessary?
 
-    componentWillMount () {
+        this.loadPreviousQuestion = this.loadPreviousQuestion.bind(this);
+        this.loadNextQuestion = this.loadNextQuestion.bind(this);
+
         const survey = SampleSurvey; // TODO: make sure
         // TODO: We will need a way to determine which question we will start with.
-        this.setState({
+        this.state = {
             answers: {}, // Where we will store respondent answers.
             questionPosition: 0, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
-        });
+        };
     }
 
-    loadPreviousButton () {
-        // TODO: When user presses the previous button.
+    loadPreviousQuestion (event) {
+        this.setState({questionPosition: this.state.questionPosition--});
     }
 
-    loadNextQuestion () { // When user presses the next button.
-        if (!Object.keys(this.state.answers)) {
+    loadNextQuestion (event) { // When user presses the next button.
+        // if (!Object.keys(this.state.answers)) {
             // survey has not started, render the first index of questions array.
             // invoke this.renderQuestion()
             // return
-        }
+        // }
         // otherwise update state with next question
-        const nextPosition = this.state.position++;
-        this.setState({questionPosition: nextPosition});
+        this.setState({questionPosition: this.state.questionPosition++});
     }
 
     renderQuestion () {
@@ -48,10 +51,17 @@ class Survey extends React.Component {
     }
 
     render () {
-
         return (
             <div className="survey-container">
                 { this.renderQuestion() }
+                <button
+                    value="previous"
+                    onClick={this.loadPreviousQuestion}
+                >Previous</button>
+                <button
+                    value="next" // do we need this?
+                    onClick={this.loadNextQuestion}
+                >Next</button>
             </div>
         );
     }

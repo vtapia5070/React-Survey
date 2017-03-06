@@ -12,7 +12,6 @@ import React, { Component, PropTypes } from 'react';
 class RadioButton extends Component {
     constructor (props) {
         super(props);
-        console.log(props);
 
         // this.onInputChange = this.onInputChange.bind(this);
 
@@ -23,7 +22,6 @@ class RadioButton extends Component {
 
     renderResponses () {
         const responses = this.props.responses.map((response) => {
-            console.log(response);
             return (
                 <div key={response.index}>
                     <input
