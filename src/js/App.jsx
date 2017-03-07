@@ -6,6 +6,7 @@ import RadioButton from './components/RadioButton.jsx';
 import Button from './components/Button.jsx';
 import CheckboxString from './components/CheckboxString.jsx';
 import TextboxGrid from './components/TextboxGrid.jsx';
+import TenPointScale from './components/TenPointScale.jsx';
 
 class Survey extends React.Component {
     constructor (props) {
@@ -36,9 +37,9 @@ class Survey extends React.Component {
     }
 
     renderQuestion () {
+       // TODO: refactor destructuring to apply spread operator for props repeated in each component.
         const { position, label, type, responses } = this.state.questions[this.state.questionPosition];
         console.log(position, label, responses);
-        // TODO: apply this to all question types, use switch statement?
 
         switch (QuestionTypes[type]) {
             case 'RadioButton':
@@ -73,7 +74,11 @@ class Survey extends React.Component {
                 break;
             case 'TenPointScale':
                 return (
-                    <div>TEST</div>
+                    <TenPointScale
+                        question={label}
+                        position={position}
+                        responses={responses}
+                    />
                 );
                 break;
             default :
