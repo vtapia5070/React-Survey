@@ -40,6 +40,17 @@ class Survey extends React.Component {
        // TODO: refactor destructuring to apply spread operator for props repeated in each component.
         const { position, label, type, responses } = this.state.questions[this.state.questionPosition];
         console.log(position, label, responses);
+        console.log(this.state.questions.length);
+
+        // TODO: is there a better way to store the current questionPosition
+        // so it matches with the index of the questions array?
+        if (position === this.state.questions.length + 100) {
+            return (
+                <div>
+                    <p>This is the end of the survey!</p>
+                </div>
+            );
+        }
 
         switch (QuestionTypes[type]) {
             case 'RadioButton':
@@ -85,7 +96,6 @@ class Survey extends React.Component {
                 return (
                     <div>The component for this question type has not been created yet.</div>
                 );
-
         }
 
     }
