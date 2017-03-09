@@ -5,7 +5,7 @@ node_modules
 Public
 
 # Private variables
-src/js/private.js
+src/js/utilities/
 
 # API Dummy Data
 api
