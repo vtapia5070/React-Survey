@@ -18,7 +18,7 @@ class Survey extends React.Component {
         // TODO: We will need a way to determine which question we will start with.
         this.state = {
             answers: {
-                Q101: true,
+                Q100: 'Test answer',
             }, // Where we will store respondent answers.
             questionPosition: 0, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
@@ -27,9 +27,7 @@ class Survey extends React.Component {
     }
 
     handleButtonClick (event, answers) {
-        console.log('submitAnswer called', 'event:', event, 'answers:', answers);
         const val = event.target.value;
-        // extend answers to this.state.answers
         const surveyAnswers = _.extend(this.state.answers, answers);
         if (val === 'Previous' && this.state.questionPosition > 0) {
             const nextPosition = this.state.questionPosition - 1;
@@ -45,7 +43,6 @@ class Survey extends React.Component {
                 questionPosition: nextPosition
             });
         }
-        console.log(this.state.answers);
     }
 
     renderQuestion () {
