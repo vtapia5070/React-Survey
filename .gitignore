@@ -1,6 +1,9 @@
 # dependencies
 node_modules
 
+# Build files
+Public/app.bundle.js
+
 # Private variables
 src/js/utilities/private.js
 
