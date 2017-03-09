@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'underscore';
 import { apiKey, SampleSurvey } from './utilities/private.js';
 import { getSurvey, QuestionTypes } from './utilities';
 import RadioButton from './components/RadioButton.jsx';
-import Button from './components/Button.jsx';
 import CheckboxString from './components/CheckboxString.jsx';
 import TextboxGrid from './components/TextboxGrid.jsx';
 import TenPointScale from './components/TenPointScale.jsx';
@@ -17,23 +17,35 @@ class Survey extends React.Component {
         const survey = SampleSurvey; // TODO: make sure
         // TODO: We will need a way to determine which question we will start with.
         this.state = {
-            answers: {}, // Where we will store respondent answers.
+            answers: {
+                Q101: true,
+            }, // Where we will store respondent answers.
             questionPosition: 0, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
         };
 
     }
 
-    handleButtonClick (event) {
+    handleButtonClick (event, answers) {
+        console.log('submitAnswer called', 'event:', event, 'answers:', answers);
         const val = event.target.value;
+        // extend answers to this.state.answers
+        const surveyAnswers = _.extend(this.state.answers, answers);
         if (val === 'Previous' && this.state.questionPosition > 0) {
             const nextPosition = this.state.questionPosition - 1;
-            this.setState({questionPosition: nextPosition});
+            this.setState({
+                answers: surveyAnswers,
+                questionPosition: nextPosition
+            });
         }
         if (val === 'Next' && this.state.questionPosition < this.state.questions.length) {
             const nextPosition = this.state.questionPosition + 1;
-            this.setState({questionPosition: nextPosition});
+            this.setState({
+                answers: surveyAnswers,
+                questionPosition: nextPosition
+            });
         }
+        console.log(this.state.answers);
     }
 
     renderQuestion () {
@@ -59,6 +71,7 @@ class Survey extends React.Component {
                         question={label}
                         position={position}
                         responses={responses}
+                        onButtonClick={this.handleButtonClick}
                     />
                 )
                 break;
@@ -104,8 +117,6 @@ class Survey extends React.Component {
         return (
             <div className="survey-container">
                 { this.renderQuestion() }
-                <Button disabled={ this.state.questionPosition === 0 } onClick={this.handleButtonClick} value="Previous" />
-                <Button disabled={ this.state.questionPosition === this.state.questions.length } onClick={this.handleButtonClick} value="Next" />
             </div>
         );
     }

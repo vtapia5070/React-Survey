@@ -3,7 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react';
 
-class Button extends Component {
+class NavButton extends Component {
     constructor (props) {
         super(props);
     }
@@ -19,10 +19,10 @@ class Button extends Component {
     }
 }
 
-Button.propTypes = {
+NavButton.propTypes = {
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
     value: PropTypes.string,
 };
 
-export default Button;
+export default NavButton;
