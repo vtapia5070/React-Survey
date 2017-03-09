@@ -1,4 +1,4 @@
-// TODO : when getting data, filter out query steing questions
+// TODO : when getting data, filter out query string questions
 export const getSurvey = () => {
 
     const jsonpCallback =  (json) => {
