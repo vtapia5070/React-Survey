@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
-import { apiKey, SampleSurvey } from './utilities/private.js';
-import { getSurvey, QuestionTypes } from './utilities';
+import { SampleSurvey } from './utilities/private.js';
+import { getSurvey, QuestionTypes } from './utilities/index.js';
 import RadioButton from './components/RadioButton.jsx';
 import CheckboxString from './components/CheckboxString.jsx';
 import TextboxGrid from './components/TextboxGrid.jsx';
@@ -48,8 +48,13 @@ class Survey extends React.Component {
     renderQuestion () {
        // TODO: refactor destructuring to apply spread operator for props repeated in each component.
         const { position, label, type, responses } = this.state.questions[this.state.questionPosition];
-        console.log(position, label, responses);
-        console.log(this.state.questions.length);
+        let disableButton;
+        if (this.state.questionPosition === this.state.questions.length - 1) {
+            disableButton = 'Next';
+        }
+        if (this.state.questionPosition === 0) {
+            disableButton = 'Previous';
+        }
 
         // TODO: is there a better way to store the current questionPosition
         // so it matches with the index of the questions array?
@@ -65,10 +70,11 @@ class Survey extends React.Component {
             case 'RadioButton':
                 return (
                     <RadioButton
-                        question={label}
-                        position={position}
-                        responses={responses}
+                        disableButton={disableButton}
                         onButtonClick={this.handleButtonClick}
+                        position={position}
+                        question={label}
+                        responses={responses}
                     />
                 )
                 break;

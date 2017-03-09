@@ -9,7 +9,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import { _ } from 'underscore';
-import NavButton from './NavButton.jsx';
+import NavButtons from './NavButtons.jsx';
 
 class RadioButton extends Component {
     constructor (props) {
@@ -75,19 +75,17 @@ class RadioButton extends Component {
                 <div className="responses">
                     {this.renderResponses()}
                 </div>
-                <div>
-                    <NavButton disabled={ this.props.position === 0 } onClick={this.handleButtonClick} value="Previous" />
-                    <NavButton disabled={ false } onClick={this.handleButtonClick} value="Next" />
-                </div>
+                <NavButtons disabled={this.props.disableButton} onClick={this.handleButtonClick} />
             </div>
         );
     }
 }
 
 RadioButton.propTypes = {
-    question: PropTypes.string,
+    disableButton: PropTypes.string,
     onButtonClick: PropTypes.func,
     position: PropTypes.number,
+    question: PropTypes.string,
     responses: PropTypes.arrayOf(
         PropTypes.shape({
             index: PropTypes.number,

@@ -1,4 +1,10 @@
+/*
+ * Check box inputs
+ */
+
 import React, { Component, PropTypes } from 'react';
+import { _ } from 'underscore';
+import NavButtons from './NavButtons.jsx';
 
 class CheckboxString extends Component {
     constructor (props) {
@@ -10,7 +16,7 @@ class CheckboxString extends Component {
             const responseHtml = { __html: response.text }
             return (
                 <div key={response.index}>
-                    <input 
+                    <input
                         type="checkbox"
                     />
                     <label dangerouslySetInnerHTML={responseHtml}></label>
@@ -28,6 +34,7 @@ class CheckboxString extends Component {
                 <p>Question {this.props.position}</p>
                 <div dangerouslySetInnerHTML={questionHtml}></div>
                 {this.renderResponses()}
+                <NavButtons disabled={this.props.disableButton} onClick={this.handleButtonClick} />
             </div>
         );
     }
