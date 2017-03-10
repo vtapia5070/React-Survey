@@ -7,6 +7,7 @@ import RadioButton from './components/RadioButton.jsx';
 import CheckboxString from './components/CheckboxString.jsx';
 import TextboxGrid from './components/TextboxGrid.jsx';
 import TenPointScale from './components/TenPointScale.jsx';
+import NavButtons from './components/NavButtons.jsx';
 
 class Survey extends React.Component {
     constructor (props) {
@@ -20,13 +21,13 @@ class Survey extends React.Component {
             answers: {
                 Q100: 'Test answer',
             }, // Where we will store respondent answers.
-            questionPosition: 0, // Current question.
+            questionPosition: 4, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
         };
 
     }
 
-    handleButtonClick (event, answers) {
+    handleButtonClick (event, answers = {}) {
         const val = event.target.value;
         const surveyAnswers = _.extend(this.state.answers, answers);
         if (val === 'Previous' && this.state.questionPosition > 0) {
@@ -43,6 +44,7 @@ class Survey extends React.Component {
                 questionPosition: nextPosition
             });
         }
+        console.log('updated answers:', this.state.answers);
     }
 
     renderQuestion () {
@@ -81,8 +83,10 @@ class Survey extends React.Component {
             case 'CheckboxString':
                 return (
                     <CheckboxString
-                        question={label}
+                        disableButton={disableButton}
+                        onButtonClick={this.handleButtonClick}
                         position={position}
+                        question={label}
                         responses={responses}
                     />
                 )
@@ -90,20 +94,29 @@ class Survey extends React.Component {
             case 'TextboxGrid':
                 return (
                     <TextboxGrid
-                        question={label}
+                        disableButton={disableButton}
+                        onButtonClick={this.handleButtonClick}
                         position={position}
+                        question={label}
                         responses={responses}
                     />
                 );
                 break;
             case 'LabelCustomHTML':
-                return <div>This is an empty question with a skip script. Are all of these question types (13) the same?</div>;
+                return (
+                    <div>
+                        <p>This is an empty question with a skip script. Are all of these question types (13) the same?</p>
+                        <NavButtons disableButton={disableButton} onClick={this.handleButtonClick} />
+                    </div>
+                );
                 break;
             case 'TenPointScale':
                 return (
                     <TenPointScale
-                        question={label}
+                        disableButton={disableButton}
+                        onButtonClick={this.handleButtonClick}
                         position={position}
+                        question={label}
                         responses={responses}
                     />
                 );

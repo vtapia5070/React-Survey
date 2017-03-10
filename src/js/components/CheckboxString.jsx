@@ -7,8 +7,38 @@ import { _ } from 'underscore';
 import NavButtons from './NavButtons.jsx';
 
 class CheckboxString extends Component {
+
     constructor (props) {
         super(props);
+
+        this.onInputChange = this.onInputChange.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+
+        this.state = {
+            responseAnswers: {},
+        }
+    }
+
+    shouldComponentUpdate (nextProps, nextState) {
+        return _.isEqual(this.state.responseAnswers, nextState.responseAnswers);
+    }
+
+    handleButtonClick (event) {
+        this.props.onButtonClick(event, this.state.responseAnswers);
+    }
+
+    onInputChange (event) {
+        const responseIndex = event.target.id;
+        const val = event.target.checked? 1 : 0;
+        const answer = {
+            [`Q${this.props.position}_${responseIndex}`]: val,
+        }
+
+        const answers = _.extend(this.state.responseAnswers, answer);
+
+        this.setState({
+            responseAnswers: answers,
+        });
     }
 
     renderResponses () {
@@ -17,6 +47,8 @@ class CheckboxString extends Component {
             return (
                 <div key={response.index}>
                     <input
+                        id={response.index}
+                        onChange={this.onInputChange}
                         type="checkbox"
                     />
                     <label dangerouslySetInnerHTML={responseHtml}></label>
@@ -41,8 +73,9 @@ class CheckboxString extends Component {
 }
 
 CheckboxString.propTypes = {
-    question: PropTypes.string,
+    onButtonClick: PropTypes.func,
     position: PropTypes.number,
+    question: PropTypes.string,
     responses: PropTypes.arrayOf(
         PropTypes.shape({
             index: PropTypes.number,

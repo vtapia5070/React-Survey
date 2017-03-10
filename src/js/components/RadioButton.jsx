@@ -31,6 +31,10 @@ class RadioButton extends Component {
         return _.isEqual(this.state.responseAnswers, nextState.responseAnswers);
     }
 
+    handleButtonClick (event) {
+        this.props.onButtonClick(event, this.state.responseAnswers);
+    }
+
     onInputChange (event) {
         const responseIndex = event.target.id;
         const val = event.target.checked? 1 : 0;
@@ -43,10 +47,6 @@ class RadioButton extends Component {
         this.setState({
             responseAnswers: answers,
         });
-    }
-
-    handleButtonClick (event) {
-        this.props.onButtonClick(event, this.state.responseAnswers);
     }
 
     renderResponses () {
