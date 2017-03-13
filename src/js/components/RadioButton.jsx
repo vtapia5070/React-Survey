@@ -3,6 +3,7 @@
  */
 
 // TODO:
+// Build a toggel to only allow one input to be checked.
 // Handle required responses.
 // Consider options. (how many can be selected?)
 // What do we do with image tags in respose text?
@@ -39,11 +40,13 @@ class RadioButton extends Component {
     onInputChange (event) {
         const responseIndex = event.target.id;
         let answers = this.state.responseAnswers;
-        let val = event.target.checked ? 1 : 0;
 
-        if (answers[`Q${this.props.position}_${responseIndex}`] !== undefined) {
-            val = answers[`Q${this.props.position}_${responseIndex}`] === 1 ? 0 : 1;
+        // We are not storing unchecked (0) values since only one answer is allowed.
+        if (answers[`Q${this.props.position}_${responseIndex}`] === 1) {
+            delete answers[`Q${this.props.position}_${responseIndex}`];
         }
+
+        let val = answers[`Q${this.props.position}_${responseIndex}`] === undefined && 1;
 
         answers[`Q${this.props.position}_${responseIndex}`] = val;
         this.setState({
