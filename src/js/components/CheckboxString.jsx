@@ -13,10 +13,10 @@ class CheckboxString extends Component {
 
         this.onInputChange = this.onInputChange.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
-
+        debugger;
         this.state = {
-            responseAnswers: {},
-        }
+            responseAnswers: props.initialAnswers,
+        };
     }
 
     shouldComponentUpdate (nextProps, nextState) {
@@ -29,7 +29,7 @@ class CheckboxString extends Component {
 
     onInputChange (event) {
         const responseIndex = event.target.id;
-        const val = event.target.checked? 1 : 0;
+        const val = event.target.checked ? 1 : 0;
         const answer = {
             [`Q${this.props.position}_${responseIndex}`]: val,
         }
@@ -43,10 +43,15 @@ class CheckboxString extends Component {
 
     renderResponses () {
         const responses = this.props.responses.map((response) => {
-            const responseHtml = { __html: response.text }
+            const responseHtml = { __html: response.text };
+            console.log('answers:', this.state);
+            const isChecked = !!this.state.responseAnswers[`Q${this.props.position}_${response.index}`];
+            console.log('rendering:', isChecked);
+
             return (
                 <div key={response.index}>
                     <input
+                        checked={isChecked}
                         id={response.index}
                         onChange={this.onInputChange}
                         type="checkbox"
@@ -73,6 +78,8 @@ class CheckboxString extends Component {
 }
 
 CheckboxString.propTypes = {
+    disableButton: PropTypes.string,
+    initialAnswers: PropTypes.object,
     onButtonClick: PropTypes.func,
     position: PropTypes.number,
     question: PropTypes.string,

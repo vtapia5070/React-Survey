@@ -21,7 +21,7 @@ class Survey extends React.Component {
             answers: {
                 Q100: 'Test answer',
             }, // Where we will store respondent answers.
-            questionPosition: 4, // Current question.
+            questionPosition: 3, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
         };
 
@@ -29,18 +29,17 @@ class Survey extends React.Component {
 
     handleButtonClick (event, answers = {}) {
         const val = event.target.value;
-        const surveyAnswers = _.extend(this.state.answers, answers);
         if (val === 'Previous' && this.state.questionPosition > 0) {
             const nextPosition = this.state.questionPosition - 1;
             this.setState({
-                answers: surveyAnswers,
+                answers: answers,
                 questionPosition: nextPosition
             });
         }
         if (val === 'Next' && this.state.questionPosition < this.state.questions.length) {
             const nextPosition = this.state.questionPosition + 1;
             this.setState({
-                answers: surveyAnswers,
+                answers: answers,
                 questionPosition: nextPosition
             });
         }
@@ -73,6 +72,7 @@ class Survey extends React.Component {
                 return (
                     <RadioButton
                         disableButton={disableButton}
+                        initialAnswers={this.state.answers}
                         onButtonClick={this.handleButtonClick}
                         position={position}
                         question={label}
@@ -84,6 +84,7 @@ class Survey extends React.Component {
                 return (
                     <CheckboxString
                         disableButton={disableButton}
+                        initialAnswers={this.state.answers}
                         onButtonClick={this.handleButtonClick}
                         position={position}
                         question={label}
@@ -95,6 +96,7 @@ class Survey extends React.Component {
                 return (
                     <TextboxGrid
                         disableButton={disableButton}
+                        initialAnswers={this.state.answers}
                         onButtonClick={this.handleButtonClick}
                         position={position}
                         question={label}
@@ -114,6 +116,7 @@ class Survey extends React.Component {
                 return (
                     <TenPointScale
                         disableButton={disableButton}
+                        initialAnswers={this.state.answers}
                         onButtonClick={this.handleButtonClick}
                         position={position}
                         question={label}

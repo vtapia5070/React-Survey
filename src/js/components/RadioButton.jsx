@@ -12,6 +12,7 @@ import { _ } from 'underscore';
 import NavButtons from './NavButtons.jsx';
 
 class RadioButton extends Component {
+
     constructor (props) {
         super(props);
 
@@ -20,7 +21,7 @@ class RadioButton extends Component {
 
         // TODO: will there be multiple like this one? if yess make it an array.
         this.state = {
-            responseAnswers: {},
+            responseAnswers: props.initialAnswers,
         }
         // if only one response is needed can we send back {Q104_2: 1}
         // or will we have to send back all possible answers
@@ -51,9 +52,12 @@ class RadioButton extends Component {
 
     renderResponses () {
         const responses = this.props.responses.map((response) => {
+            const isChecked = this.state.responseInitialValues[`Q${this.props.position}_${response.index}`];
+            console.log('rendering:', isChecked);
             return (
                 <div key={response.index}>
                     <input
+                        checked={isChecked}
                         id={response.index}
                         onChange={this.onInputChange}
                         type="radio"
@@ -83,6 +87,7 @@ class RadioButton extends Component {
 
 RadioButton.propTypes = {
     disableButton: PropTypes.string,
+    initialAnswers: PropTypes.object,
     onButtonClick: PropTypes.func,
     position: PropTypes.number,
     question: PropTypes.string,

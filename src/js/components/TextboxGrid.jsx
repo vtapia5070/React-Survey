@@ -11,7 +11,7 @@ class TextboxGrid extends Component {
         this.handleButtonClick = this.handleButtonClick.bind(this);
 
         this.state = {
-            responseAnswers: {},
+            responseAnswers: props.initialAnswers,
         }
     }
 
@@ -69,6 +69,8 @@ class TextboxGrid extends Component {
 }
 
 TextboxGrid.propTypes = {
+    disableButton: PropTypes.string,
+    initialAnswers: PropTypes.object,
     onButtonClick: PropTypes.func,
     position: PropTypes.number,
     question: PropTypes.string,
