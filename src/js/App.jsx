@@ -21,7 +21,7 @@ class Survey extends React.Component {
             answers: {
                 Q100: 'Test answer',
             }, // Where we will store respondent answers.
-            questionPosition: 3, // Current question.
+            questionPosition: 0, // Current question.
             questions: survey.questions, // TODO: Destructure questions to be assigned to position number.
         };
 

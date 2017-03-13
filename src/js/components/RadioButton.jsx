@@ -19,8 +19,8 @@ class RadioButton extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
 
-        // TODO: will there be multiple like this one? if yess make it an array.
         this.state = {
+            responses: props.responses,
             responseAnswers: props.initialAnswers,
         }
         // if only one response is needed can we send back {Q104_2: 1}
@@ -38,25 +38,28 @@ class RadioButton extends Component {
 
     onInputChange (event) {
         const responseIndex = event.target.id;
-        const val = event.target.checked? 1 : 0;
-        const answer = {
-            [`Q${this.props.position}_${responseIndex}`]: val,
+        let answers = this.state.responseAnswers;
+        let val = event.target.checked ? 1 : 0;
+
+        if (answers[`Q${this.props.position}_${responseIndex}`] !== undefined) {
+            val = answers[`Q${this.props.position}_${responseIndex}`] === 1 ? 0 : 1;
         }
 
-        const answers = _.extend(this.state.responseAnswers, answer);
-
+        answers[`Q${this.props.position}_${responseIndex}`] = val;
         this.setState({
             responseAnswers: answers,
         });
     }
 
     renderResponses () {
-        const responses = this.props.responses.map((response) => {
-            const isChecked = this.state.responseInitialValues[`Q${this.props.position}_${response.index}`];
-            console.log('rendering:', isChecked);
+        const responses = this.state.responses.map((response) => {
+
+            const isChecked = this.state.responseAnswers[`Q${this.props.position}_${response.index}`] === 1;
+
             return (
                 <div key={response.index}>
                     <input
+                        name={response.index}
                         checked={isChecked}
                         id={response.index}
                         onChange={this.onInputChange}

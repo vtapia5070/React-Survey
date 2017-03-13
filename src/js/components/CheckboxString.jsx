@@ -13,7 +13,7 @@ class CheckboxString extends Component {
 
         this.onInputChange = this.onInputChange.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
-        debugger;
+
         this.state = {
             responseAnswers: props.initialAnswers,
         };
@@ -44,9 +44,7 @@ class CheckboxString extends Component {
     renderResponses () {
         const responses = this.props.responses.map((response) => {
             const responseHtml = { __html: response.text };
-            console.log('answers:', this.state);
             const isChecked = !!this.state.responseAnswers[`Q${this.props.position}_${response.index}`];
-            console.log('rendering:', isChecked);
 
             return (
                 <div key={response.index}>
